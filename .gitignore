@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+limine/
+ovmf/
+
+tenguos.iso
+!build/tenguos.iso
