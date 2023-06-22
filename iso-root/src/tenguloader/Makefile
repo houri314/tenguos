@@ -1,14 +1,17 @@
 CC := gcc
 LD := ld
 
-LDFLAGS := \
+LDFLAGS ?=
+CFLAGS ?=
+
+DEF_LDFLAGS := \
 		-nostdlib\
 		-static\
 		-m elf_x86_64\
 		-z max-page-size=0x1000\
 		-T linker.ld
 
-CFLAGS := \
+DEF_CFLAGS := \
     -Wall \
     -std=gnu11 \
     -ffreestanding \
@@ -27,6 +30,8 @@ CFLAGS := \
     -mno-red-zone \
     -mcmodel=kernel
 
+override LDFLAGS += $(DEF_LDFLAGS)
+override CFLAGS += $(DEF_CFLAGS)
 
 OBJ := main.o string.o console.o
 
