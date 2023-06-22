@@ -28,7 +28,7 @@ CFLAGS := \
     -mcmodel=kernel
 
 
-OBJ := main.o
+OBJ := main.o string.o console.o
 
 tenguloader.elf: $(OBJ)
 	$(LD) $(OBJ) $(LDFLAGS) -o $@
