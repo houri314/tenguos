@@ -18,8 +18,12 @@ typedef struct tengu6_info {
   struct limine_memmap_response* memmap;
 } tengu6_info;
 
+#ifdef TENGU6_STANDALONE
+void main(tengu6_info tengu6) {
+#else
 void main(void) {
   tengu6_info tengu6 = {0};
+#endif
 
   //Initializing the machine info struct if tenguloader disabled.
 #ifdef TENGU6_STANDALONE

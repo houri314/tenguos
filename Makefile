@@ -1,11 +1,16 @@
 #Call this to build important files from host OS.
+TENGU6_STANDALONE ?= yes
 
 TENGULOADER_CFLAGS ?= -Ofast
 TENGULOADER_LDFLAGS ?=
 
 #For now Tengu6 is forced to compiled to be standalone.
-TENGU6_CFLAGS ?= -DTENGU6_STANDALONE -Os
+TENGU6_CFLAGS ?= -Os
 TENGU6_LDFLAGS ?= 
+
+ifeq ($(strip $(TENGU6_STANDALONE)),yes)
+override TENGU6_CFLAGS:=$(TENGU6_CFLAGS)\ -DTENGU6_STANDALONE
+endif
 
 IMAGE_NAME := tenguos
 
@@ -32,14 +37,16 @@ os-iso: limine tenguloader tengu6
 
 #Install OS loader to /boot.
 tenguloader:
+ifneq ($(strip $(TENGU6_STANDALONE)),yes)
 	make -C iso-root/src/tenguloader \
 		CFLAGS=$(TENGULOADER_CFLAGS) \
 		LDFLAGS=$(TENGULOADER_LDFLAGS) install
+endif
 
 tengu6:
 	make -C iso-root/src/tengu6 \
 		CFLAGS=$(TENGU6_CFLAGS) \
-		LDFLAGS=$(TENGU66_CFLAGS) install
+		LDFLAGS=$(TENGU6_LDFLAGS) install
 
 clean:
 	rm -f $(IMAGE_NAME).iso
