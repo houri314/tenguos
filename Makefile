@@ -3,14 +3,15 @@
 TENGULOADER_CFLAGS ?= -Ofast
 TENGULOADER_LDFLAGS ?=
 
-TENGU6_CFLAGS ?= -Os
+#For now Tengu6 is forced to compiled to be standalone.
+TENGU6_CFLAGS ?= -DTENGU6_STANDALONE -Os
 TENGU6_LDFLAGS ?= 
 
 IMAGE_NAME := tenguos
 
 all: os-iso
 
-#Download firmware for UEFI testing with QEMU
+#Download firmware for UEFI testing with QEMU.
 ovmf:
 	mkdir -p ovmf
 	cd ovmf && curl -Lo OVMF-X64.zip https://efi.akeo.ie/OVMF/OVMF-X64.zip && unzip OVMF-X64.zip
@@ -29,7 +30,7 @@ os-iso: limine tenguloader tengu6
 		iso-root/ -o $(IMAGE_NAME).iso
 	limine/limine-deploy $(IMAGE_NAME).iso
 
-#Install OS loader to /boot
+#Install OS loader to /boot.
 tenguloader:
 	make -C iso-root/src/tenguloader \
 		CFLAGS=$(TENGULOADER_CFLAGS) \
