@@ -28,7 +28,8 @@ DEF_CFLAGS := \
     -mno-sse \
     -mno-sse2 \
     -mno-red-zone \
-    -mcmodel=kernel
+    -mcmodel=kernel \
+		-I../../usr/include
 
 override LDFLAGS += $(DEF_LDFLAGS)
 override CFLAGS += $(DEF_CFLAGS)
